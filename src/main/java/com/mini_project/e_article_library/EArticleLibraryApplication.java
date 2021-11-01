@@ -1,4 +1,4 @@
-package com.team_b.e_article_library;
+package com.mini_project.e_article_library;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

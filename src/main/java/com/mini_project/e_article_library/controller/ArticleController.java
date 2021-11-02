@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,29 @@ public class ArticleController {
         Optional<ArticleDto> article = articleRepository.findById(id);
         ArticleDto articleDto = article.get();
         return ResponseEntity.ok(articleDto);
+    }
+
+    @PutMapping("/articles/{id}")
+    public ArticleDto updateArticle(@PathVariable int id, @RequestBody Article articleDetails) {
+        Optional<ArticleDto> article = articleRepository.findById(id);
+        ArticleDto articleDto = article.get();
+        if (articleDetails.getName() != null) {
+            articleDto.setName(articleDetails.getName());
+        }
+        if (articleDetails.getTitle() != null) {
+            articleDto.setTitle(articleDetails.getTitle());
+        }
+        if (articleDetails.getCategory() != null) {
+            articleDto.setCategory(articleDetails.getCategory());
+        }
+        if (articleDetails.getContent() != null) {
+            articleDto.setContent(articleDetails.getContent());
+        }
+        if (articleDetails.getDescription() != null) {
+            articleDto.setDescription(articleDetails.getDescription());
+        }
+
+        return articleRepository.save(articleDto);
     }
 
 }

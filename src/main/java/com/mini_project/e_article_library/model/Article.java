@@ -3,19 +3,19 @@ package com.mini_project.e_article_library.model;
 public class Article {
     private String title;
     private String name;
-    private String category;
+    private Category category;
     private String description;
     private String content;
 
-    public Article() {
-    }
-
-    public Article(String title, String name, String category, String description, String content) {
+    public Article(String title, String name, Category category, String description, String content) {
         this.title = title;
         this.name = name;
         this.category = category;
         this.description = description;
         this.content = content;
+    }
+
+    public Article() {
     }
 
     public String getTitle() {
@@ -34,11 +34,11 @@ public class Article {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

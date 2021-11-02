@@ -8,7 +8,10 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import com.mini_project.e_article_library.model.Category;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,11 +26,26 @@ public class ArticleDto {
     @Column(name = "article_id")
     private int id;
     private String name;
-    private String category;
+    private Category category;
+    @Lob
     private String description;
     private String content;
     @CreatedDate
     private Date publicationDate;
+
+    public ArticleDto() {
+    }
+
+    public ArticleDto(String title, int id, String name, Category category, String description, String content,
+            Date publicationDate) {
+        this.title = title;
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.content = content;
+        this.publicationDate = publicationDate;
+    }
 
     public String getTitle() {
         return title;
@@ -53,11 +71,11 @@ public class ArticleDto {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -82,20 +100,6 @@ public class ArticleDto {
     }
 
     public void setPublicationDate(Date publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public ArticleDto() {
-    }
-
-    public ArticleDto(String title, int id, String name, String category, String description, String content,
-            Date publicationDate) {
-        this.title = title;
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.content = content;
         this.publicationDate = publicationDate;
     }
 

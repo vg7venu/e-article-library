@@ -1,16 +1,17 @@
 package com.mini_project.e_article_library.controller;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.mini_project.e_article_library.exception.ArticleNotFoundException;
 import com.mini_project.e_article_library.exception.CategoryNotMatchedException;
+import com.mini_project.e_article_library.exception.SomethingWentWrongException;
 import com.mini_project.e_article_library.jpa.model.ArticleDto;
 import com.mini_project.e_article_library.model.Article;
 import com.mini_project.e_article_library.model.Category;
 import com.mini_project.e_article_library.repository.ArticleRepository;
+import com.mini_project.e_article_library.service.ArticleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/v1/")
@@ -30,6 +30,10 @@ public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private ArticleService articleService;
+
+    // Create Article
     @PostMapping("/create")
     public ArticleDto createArticle(@RequestBody Article article) {
         ArticleDto articleDto = new ArticleDto();
@@ -45,6 +49,7 @@ public class ArticleController {
         return articleRepository.save(articleDto);
     }
 
+    // Get Article by Id
     @GetMapping("/articles/{id}")
     public ResponseEntity<ArticleDto> getArticle(@PathVariable int id) {
         Optional<ArticleDto> article;
@@ -58,6 +63,7 @@ public class ArticleController {
         return ResponseEntity.ok(articleDto);
     }
 
+    // Update Article
     @PutMapping("/articles/{id}")
     public ArticleDto updateArticle(@PathVariable int id, @RequestBody Article articleDetails) {
         Optional<ArticleDto> article;
@@ -87,23 +93,23 @@ public class ArticleController {
         return articleRepository.save(articleDto);
     }
 
+    // Get Article links based on Category
     @GetMapping("/{category}")
     public List<String> getFictionArticles(@PathVariable String category) {
-        List<String> listofUrls = new ArrayList<String>();
+        List<String> listOfURLs = new ArrayList<String>();
         Optional<List<ArticleDto>> article;
         try {
             Category cat = Category.valueOf(category);
             article = articleRepository.findByCategory(cat);
-
-            for (int i = 0; i < article.get().size(); i++) {
-                URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/v1/articles")
-                        .path("/{id}").buildAndExpand(article.get().get(i).getId()).toUri();
-                listofUrls.add(location.toString());
-            }
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }
-        return listofUrls;
+        try {
+            listOfURLs = articleService.generateArticleLinksByCategory(article);
+        } catch (Exception e) {
+            throw new SomethingWentWrongException("Something is problem with urls generator" + e);
+        }
+        return listOfURLs;
     }
 
 }

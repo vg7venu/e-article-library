@@ -8,6 +8,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.mini_project.e_article_library.model.Category;
@@ -26,6 +27,7 @@ public class ArticleDto {
     private int id;
     private String name;
     private Category category;
+    @Lob
     private String description;
     private String content;
     @CreatedDate

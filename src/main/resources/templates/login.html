@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>E ARTICLE LIBRARY</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<a class="navbar-brand"
+				style="color: #1338BE; font-size: 24px; font-weight: bold" href="#"
+				th:href="@{/}">E-ARTICLE-LIBRARY</a>
+			<div style="padding-left: 16px"></div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<h1 style="font-size: 22px; text: bold; color: purple">Sign in
+					to your account</h1>
+
+
+				<form th:action="@{/login}" th:object="${loginForm}" method="post">
+
+					<div class="form-group">
+						<label for="username" style="color: purple; font-size: 16px">
+							Username </label> <input type="text" class="form-control" id="username"
+							name="username" placeholder="Enter Username"
+							autofocus="autofocus">
+					</div>
+
+					<div class="form-group">
+						<label for="password" style="color: purple; font-size: 16px">Password</label>
+						<input type="password" id="password" name="password"
+							class="form-control" placeholder="Enter Password" />
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<input type="submit" name="login-submit" id="login-submit"
+									class="form-control btn btn-primary" value="Log In" />
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

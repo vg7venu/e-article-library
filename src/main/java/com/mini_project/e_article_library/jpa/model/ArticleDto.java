@@ -1,4 +1,4 @@
-package com.mini_project.e_article_library.entity;
+package com.mini_project.e_article_library.jpa.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "articles")
-public class Article {
+public class ArticleDto {
     private String title;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

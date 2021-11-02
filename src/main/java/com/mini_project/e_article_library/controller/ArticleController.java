@@ -2,6 +2,8 @@ package com.mini_project.e_article_library.controller;
 
 import java.util.Optional;
 
+import com.mini_project.e_article_library.exception.ArticleNotFoundException;
+import com.mini_project.e_article_library.exception.CategoryNotMatchedException;
 import com.mini_project.e_article_library.jpa.model.ArticleDto;
 import com.mini_project.e_article_library.model.Article;
 import com.mini_project.e_article_library.repository.ArticleRepository;
@@ -22,14 +24,17 @@ public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
-    
-    
+
     @PostMapping("/create")
     public ArticleDto createArticle(@RequestBody Article article) {
         ArticleDto articleDto = new ArticleDto();
         articleDto.setName(article.getName());
         articleDto.setTitle(article.getTitle());
-        articleDto.setCategory(article.getCategory());
+        try {
+            articleDto.setCategory(article.getCategory());
+        } catch (Exception e) {
+            throw new CategoryNotMatchedException("Please check the category/" + e);
+        }
         articleDto.setContent(article.getContent());
         articleDto.setDescription(article.getDescription());
         return articleRepository.save(articleDto);
@@ -37,15 +42,27 @@ public class ArticleController {
 
     @GetMapping("/articles/{id}")
     public ResponseEntity<ArticleDto> getArticle(@PathVariable int id) {
-        Optional<ArticleDto> article = articleRepository.findById(id);
-        ArticleDto articleDto = article.get();
+        Optional<ArticleDto> article;
+        ArticleDto articleDto;
+        try {
+            article = articleRepository.findById(id);
+            articleDto = article.get();
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
         return ResponseEntity.ok(articleDto);
     }
 
     @PutMapping("/articles/{id}")
     public ArticleDto updateArticle(@PathVariable int id, @RequestBody Article articleDetails) {
-        Optional<ArticleDto> article = articleRepository.findById(id);
-        ArticleDto articleDto = article.get();
+        Optional<ArticleDto> article;
+        ArticleDto articleDto;
+        try {
+            article = articleRepository.findById(id);
+            articleDto = article.get();
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
         if (articleDetails.getName() != null) {
             articleDto.setName(articleDetails.getName());
         }

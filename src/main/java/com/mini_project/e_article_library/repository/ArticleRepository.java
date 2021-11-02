@@ -1,8 +1,10 @@
 package com.mini_project.e_article_library.repository;
 
-import com.mini_project.e_article_library.entity.Article;
+import com.mini_project.e_article_library.jpa.model.ArticleDto;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ArticleRepository extends CrudRepository<Article, Integer> {
+@Repository
+public interface ArticleRepository extends CrudRepository<ArticleDto, Integer> {
 }

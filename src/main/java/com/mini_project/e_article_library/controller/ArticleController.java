@@ -29,7 +29,7 @@ public class ArticleController {
         articleDto.setTitle(article.getTitle());
         articleDto.setCategory(article.getCategory());
         articleDto.setContent(article.getContent());
-        article.setDescription(article.getDescription());
+        articleDto.setDescription(article.getDescription());
         return articleRepository.save(articleDto);
     }
 

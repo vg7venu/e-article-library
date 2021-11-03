@@ -20,18 +20,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "articles")
 public class ArticleDto {
-    private String title;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "article_id")
     private int id;
     private String name;
+    private String title;
     private Category category;
-    @Lob
-    private String description;
-    private String content;
     @CreatedDate
     private Date publicationDate;
+    private String content;
+    @Lob
+    private String description;
 
     public ArticleDto() {
     }

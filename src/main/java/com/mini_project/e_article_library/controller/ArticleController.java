@@ -16,6 +16,7 @@ import com.mini_project.e_article_library.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,6 +62,7 @@ public class ArticleController {
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }
+
         return ResponseEntity.ok(articleDto);
     }
 
@@ -92,6 +94,21 @@ public class ArticleController {
         }
 
         return articleRepository.save(articleDto);
+    }
+
+    // Delete Article by Id
+    @DeleteMapping("/article/{id}")
+    public ResponseEntity<String> deleteArticleById(@PathVariable int id) {
+        Optional<ArticleDto> article;
+        ArticleDto articleDto;
+        try {
+            article = articleRepository.findById(id);
+            articleDto = article.get();
+            articleRepository.delete(articleDto);
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
+        return ResponseEntity.ok("Article has been deleted");
     }
 
     // Get Article links based on Category

@@ -112,6 +112,7 @@ public class ArticleController {
         }
         return listOfURLs;
     }
+    
 
     // Get all articles in the category
     @GetMapping("/category/{category}/articles")

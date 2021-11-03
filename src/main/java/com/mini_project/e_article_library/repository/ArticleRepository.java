@@ -14,4 +14,6 @@ public interface ArticleRepository extends CrudRepository<ArticleDto, Integer> {
     Optional<List<ArticleDto>> findByCategory(Category category);
 
     Optional<List<ArticleDto>> findByName(String name);
+
+    Optional<List<ArticleDto>> findByTitle(String name);
 }

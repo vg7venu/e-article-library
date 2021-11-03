@@ -105,6 +105,9 @@ public class ArticleController {
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }
+        if (article.get().size() == 0) {
+            throw new ArticleNotFoundException("Article not found");
+        }
         try {
             listOfURLs = articleService.generateArticleLinksByCategory(article);
         } catch (Exception e) {
@@ -112,7 +115,6 @@ public class ArticleController {
         }
         return listOfURLs;
     }
-    
 
     // Get all articles in the category
     @GetMapping("/category/{category}/articles")
@@ -124,7 +126,9 @@ public class ArticleController {
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }
-
+        if (article.get().size() == 0) {
+            throw new ArticleNotFoundException("Article not found");
+        }
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 
@@ -137,7 +141,24 @@ public class ArticleController {
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }
+        if (article.get().size() == 0) {
+            throw new ArticleNotFoundException("Article not found");
+        }
+        return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
+    }
 
+    // Find Article by name
+    @GetMapping("/article/{name}")
+    public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByTitle(@PathVariable String name) {
+        Optional<List<ArticleDto>> article;
+        try {
+            article = articleRepository.findByTitle(name);
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
+        if (article.get().size() == 0) {
+            throw new ArticleNotFoundException("Article not found");
+        }
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 }

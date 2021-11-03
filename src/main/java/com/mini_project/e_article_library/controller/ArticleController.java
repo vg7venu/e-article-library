@@ -147,12 +147,12 @@ public class ArticleController {
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 
-    // Find Article by name
-    @GetMapping("/article/{name}")
-    public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByTitle(@PathVariable String name) {
+    // Find Article by title
+    @GetMapping("/article/{title}")
+    public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByTitle(@PathVariable String title) {
         Optional<List<ArticleDto>> article;
         try {
-            article = articleRepository.findByTitle(name);
+            article = articleRepository.findByTitle(title);
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }

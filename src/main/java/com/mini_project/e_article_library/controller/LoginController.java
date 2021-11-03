@@ -38,5 +38,5 @@ public class LoginController {
 	    public String getFiction() {
 	    	return "fiction";
 	    }
-
+	 
 }

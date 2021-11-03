@@ -11,5 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArticleRepository extends CrudRepository<ArticleDto, Integer> {
-    Optional<List<ArticleDto>> findByCategory(Category fiction);
+    Optional<List<ArticleDto>> findByCategory(Category category);
+
+    Optional<List<ArticleDto>> findByName(String name);
 }

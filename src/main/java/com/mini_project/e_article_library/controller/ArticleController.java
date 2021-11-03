@@ -14,6 +14,7 @@ import com.mini_project.e_article_library.repository.ArticleRepository;
 import com.mini_project.e_article_library.service.ArticleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,7 +96,7 @@ public class ArticleController {
 
     // Get Article links based on Category
     @GetMapping("/{category}")
-    public List<String> getFictionArticles(@PathVariable String category) {
+    public List<String> getArticlesByCategoryLinks(@PathVariable String category) {
         List<String> listOfURLs = new ArrayList<String>();
         Optional<List<ArticleDto>> article;
         try {
@@ -112,4 +113,30 @@ public class ArticleController {
         return listOfURLs;
     }
 
+    // Get all articles in the category
+    @GetMapping("/category/{category}/articles")
+    public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByCategory(@PathVariable String category) {
+        Optional<List<ArticleDto>> article;
+        try {
+            Category cat = Category.valueOf(category);
+            article = articleRepository.findByCategory(cat);
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
+
+        return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
+    }
+
+    // Find Article by name
+    @GetMapping("/author/{name}/articles")
+    public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByName(@PathVariable String name) {
+        Optional<List<ArticleDto>> article;
+        try {
+            article = articleRepository.findByName(name);
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
+
+        return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
+    }
 }

@@ -1,8 +1,6 @@
 package com.mini_project.e_article_library.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.mini_project.e_article_library.exception.ArticleNotFoundException;
 import com.mini_project.e_article_library.exception.CategoryNotMatchedException;
@@ -41,6 +39,7 @@ public class ArticleController {
         ArticleDto articleDto = new ArticleDto();
         articleDto.setName(article.getName());
         articleDto.setTitle(article.getTitle());
+        articleDto.setEmail(article.getEmail());
         try {
             articleDto.setCategory(article.getCategory());
         } catch (Exception e) {
@@ -149,6 +148,38 @@ public class ArticleController {
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 
+    // Get all articles in the category
+    @GetMapping("/articles/all")
+    public ResponseEntity<Map> getArticlesInAllCategories() {
+        Map<Category, Optional<List<ArticleDto>>> map = new HashMap();
+        for (Category category : Category.values()) {
+            Optional<List<ArticleDto>> articles;
+            try {
+                articles = articleRepository.findByCategory(category);
+            } catch (Exception e) {
+                throw new ArticleNotFoundException("Article not found/" + e);
+            }
+            map.put(category, articles);
+        }
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
+    }
+
+    // Get all articles using email
+    @GetMapping("/articles/{email}/all")
+    public ResponseEntity<Map> getArticlesByEmailInAllCategories(@PathVariable String email) {
+        Map<Category, Optional<List<ArticleDto>>> map = new HashMap();
+        for (Category category : Category.values()) {
+            Optional<List<ArticleDto>> articles;
+            try {
+                articles = articleRepository.findByCategoryAndEmail(category, email);
+            } catch (Exception e) {
+                throw new ArticleNotFoundException("Article not found/" + e);
+            }
+            map.put(category, articles);
+        }
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
+    }
+
     // Find Article by name
     @GetMapping("/author/{name}/articles")
     public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByName(@PathVariable String name) {
@@ -178,4 +209,20 @@ public class ArticleController {
         }
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
+
+    // Find Article by Author name(email)
+    @GetMapping("/article/author/{email}")
+    public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByAuthorEmail(@PathVariable String email) {
+        Optional<List<ArticleDto>> article;
+        try {
+            article = articleRepository.findByEmail(email);
+        } catch (Exception e) {
+            throw new ArticleNotFoundException("Article not found/" + e);
+        }
+        if (article.get().size() == 0) {
+            throw new ArticleNotFoundException("Article not found");
+        }
+        return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
+    }
+
 }

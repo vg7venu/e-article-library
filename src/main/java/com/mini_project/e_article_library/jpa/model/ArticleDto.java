@@ -25,6 +25,7 @@ public class ArticleDto {
     @Column(name = "article_id")
     private int id;
     private String name;
+    private String email;
     private String title;
     private Category category;
     @CreatedDate
@@ -36,11 +37,20 @@ public class ArticleDto {
     public ArticleDto() {
     }
 
-    public ArticleDto(String title, int id, String name, Category category, String description, String content,
-            Date publicationDate) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public ArticleDto(String title, int id, String name, String email, Category category, String description, String content,
+                      Date publicationDate) {
         this.title = title;
         this.id = id;
         this.name = name;
+        this.email = email;
         this.category = category;
         this.description = description;
         this.content = content;

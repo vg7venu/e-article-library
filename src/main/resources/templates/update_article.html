@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Employee Management System</h1>
+        <hr>
+        <h2>Update Employee</h2>
+
+        <form action="#" th:action="@{/saveArticle_details}" th:object="${articles}" method="POST">
+
+            <!-- Add hidden form field to handle update -->
+           <input type="hidden" th:field="*{id}"/>
+
+          <!--   <input type="text" th:field="*{roll}" class="form-control mb-4 col-4"> -->
+
+            <input type="text" th:field="*{author}" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{category}" class="form-control mb-4 col-4">
+            
+                 <input type="text" th:field="*{content}" class="form-control mb-4 col-4">
+                 
+                      <input type="text" th:field="*{date}" class="form-control mb-4 col-4">
+                      
+                           <input type="text" th:field="*{description}" class="form-control mb-4 col-4">
+                           
+                                <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
+
+            <button type="submit" class="btn btn-info col-2"> Update Articles</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/getAll}"> Back to Article List</a>
+    </div>
+</body>
+</html>

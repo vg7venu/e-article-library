@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+    <div class="container">
+        <h1>E-Library Management System</h1>
+        <hr>
+        <h2>Save Article</h2>
+
+        <form action="#" th:action="@{/saveArticle_details}" th:object="${articles}" method="POST">
+            <input type="text" th:field="*{roll}" placeholder="article_id" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{author}" placeholder="author" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{category}" placeholder="category" class="form-control mb-4 col-4">
+             <input type="text" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
+              <input type="text" th:field="*{date}" placeholder="date" class="form-control mb-4 col-4">
+               <input type="text" th:field="*{description}" placeholder="description" class="form-control mb-4 col-4">
+ 			 <input type="text" th:field="*{title}" placeholder="title" class="form-control mb-4 col-4">
+            <button type="submit" class="btn btn-info col-2"> Save Article</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/getAll}"> Back to Article List</a>
+    </div>
+</body>
+</html>

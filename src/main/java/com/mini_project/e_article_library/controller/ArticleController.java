@@ -1,6 +1,10 @@
 package com.mini_project.e_article_library.controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import com.mini_project.e_article_library.exception.ArticleNotFoundException;
 import com.mini_project.e_article_library.exception.CategoryNotMatchedException;
@@ -23,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/v1/")
 public class ArticleController {
@@ -33,7 +39,7 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    // Create Article
+    @Operation(summary = "Create Article", tags = "Create and Modify Articles")
     @PostMapping("/create")
     public ArticleDto createArticle(@RequestBody Article article) {
         ArticleDto articleDto = new ArticleDto();
@@ -50,7 +56,7 @@ public class ArticleController {
         return articleRepository.save(articleDto);
     }
 
-    // Get Article by Id
+    @Operation(summary = "Get Articles using article Id", tags = "Retrieve Articles")
     @GetMapping("/articles/{id}")
     public ResponseEntity<ArticleDto> getArticle(@PathVariable int id) {
         Optional<ArticleDto> article;
@@ -65,7 +71,7 @@ public class ArticleController {
         return ResponseEntity.ok(articleDto);
     }
 
-    // Update Article
+    @Operation(summary = "Modify Article using Id", tags = "Create and Modify Articles")
     @PutMapping("/articles/{id}")
     public ArticleDto updateArticle(@PathVariable int id, @RequestBody Article articleDetails) {
         Optional<ArticleDto> article;
@@ -95,7 +101,7 @@ public class ArticleController {
         return articleRepository.save(articleDto);
     }
 
-    // Delete Article by Id
+    @Operation(summary = "Delete Article by Id", tags = "Create and Modify Articles")
     @DeleteMapping("/article/{id}")
     public ResponseEntity<String> deleteArticleById(@PathVariable int id) {
         Optional<ArticleDto> article;
@@ -110,7 +116,7 @@ public class ArticleController {
         return ResponseEntity.ok("Article has been deleted");
     }
 
-    // Get Article links based on Category
+    @Operation(summary = "Get Articles links by Category", tags = "Links")
     @GetMapping("/{category}")
     public List<String> getArticlesByCategoryLinks(@PathVariable String category) {
         List<String> listOfURLs = new ArrayList<String>();
@@ -132,7 +138,7 @@ public class ArticleController {
         return listOfURLs;
     }
 
-    // Get all articles in the category
+    @Operation(summary = "Get All Articles in that Category", tags = "Retrieve Articles")
     @GetMapping("/category/{category}/articles")
     public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByCategory(@PathVariable String category) {
         Optional<List<ArticleDto>> article;
@@ -148,7 +154,7 @@ public class ArticleController {
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 
-    // Get all articles in the category
+    @Operation(summary = "Get All Articles in all Categories", tags = "Retrieve Articles")
     @GetMapping("/articles/all")
     public ResponseEntity<Map> getArticlesInAllCategories() {
         Map<Category, Optional<List<ArticleDto>>> map = new HashMap();
@@ -164,7 +170,7 @@ public class ArticleController {
         return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
-    // Get all articles using email
+    @Operation(summary = "Get All Articles of that Email in all Categories", tags = "Retrieve Articles")
     @GetMapping("/articles/{email}/all")
     public ResponseEntity<Map> getArticlesByEmailInAllCategories(@PathVariable String email) {
         Map<Category, Optional<List<ArticleDto>>> map = new HashMap();
@@ -180,7 +186,7 @@ public class ArticleController {
         return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
-    // Find Article by name
+    @Operation(summary = "Get Articles by the Name", tags = "Retrieve Articles")
     @GetMapping("/author/{name}/articles")
     public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByName(@PathVariable String name) {
         Optional<List<ArticleDto>> article;
@@ -195,7 +201,7 @@ public class ArticleController {
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 
-    // Find Article by title
+    @Operation(summary = "Get Articles using Title", tags = "Retrieve Articles")
     @GetMapping("/article/{title}")
     public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByTitle(@PathVariable String title) {
         Optional<List<ArticleDto>> article;
@@ -210,7 +216,7 @@ public class ArticleController {
         return new ResponseEntity<Optional<List<ArticleDto>>>(article, HttpStatus.OK);
     }
 
-    // Find Article by Author name(email)
+    @Operation(summary = "Get Articles using Author email", tags = "Retrieve Articles")
     @GetMapping("/article/author/{email}")
     public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByAuthorEmail(@PathVariable String email) {
         Optional<List<ArticleDto>> article;

@@ -33,10 +33,5 @@ public class LoginController {
 		return "login";
 
 	}
-	
-	 @GetMapping("/fiction")
-	    public String getFiction() {
-	    	return "fiction";
-	    }
 
 }

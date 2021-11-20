@@ -16,9 +16,9 @@ import com.mini_project.e_article_library.model.Category;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "articles")
+// @Entity
+// @EntityListeners(AuditingEntityListener.class)
+// @Table(name = "articles")
 public class ArticleDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,8 +45,8 @@ public class ArticleDto {
         this.email = email;
     }
 
-    public ArticleDto(String title, int id, String name, String email, Category category, String description, String content,
-                      Date publicationDate) {
+    public ArticleDto(String title, int id, String name, String email, Category category, String description,
+            String content, Date publicationDate) {
         this.title = title;
         this.id = id;
         this.name = name;

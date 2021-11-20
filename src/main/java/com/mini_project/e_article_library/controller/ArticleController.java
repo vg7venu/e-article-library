@@ -55,7 +55,7 @@ public class ArticleController {
         // articleDto.setContent(article.getContent());
         // articleDto.setDescription(article.getDescription());
         articleRepository.save(article);
-        return "redirect:/article/all";
+        return "redirect:/article/" + String.valueOf(articleRepository.save(article).getId());
     }
 
     @Operation(summary = "Get Articles using article Id", tags = "Retrieve Articles")

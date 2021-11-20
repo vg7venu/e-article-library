@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <h1>Welcome to E-Article Library</h1>
-        <a th:href="@{/article/all}">Browse All Articles By Categroy</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomePage</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div align="center" style="margin: 200px 0px 0px 0px">
+      <h1 style="font-weight: 300">Welcome to E-Article Library</h1>
+      <br />
+      <br />
+
+      <a th:href="@{/article/all}" class="btn btn-primary btn-sm mb-3"
+        >Browse All Articles</a
+      >
     </div>
-</body>
+  </body>
 </html>

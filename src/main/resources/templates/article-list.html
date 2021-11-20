@@ -35,7 +35,8 @@
                             </td>
                             
                             <td th:utext="${article.category}">...</td>
-                            <td th:utext="${article.publicationDate}">...</td>
+                            <!-- <td th:utext="${article.publicationDate}">...</td> -->
+                            <td th:utext="${#dates.format(article.publicationDate, 'dd-MMM-yyyy')}">...</td>
                             <!-- <td th:utext="${article.content}">...</td>
                             <td th:utext="${article.description}">...</td> -->
                         </tr>

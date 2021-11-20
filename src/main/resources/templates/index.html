@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,7 +16,14 @@
     />
   </head>
   <body>
-    <div align="center" style="margin: 200px 0px 0px 0px">
+    <div
+      sec:authorize="isAuthenticated()"
+      align="center"
+      style="margin: 200px 0px 0px 0px"
+    >
+      Hi
+      <span sec:authentication="name" style="font-weight: 450">Username</span>!
+      <span sec:authentication="principal.authorities">Roles</span>
       <h1 style="font-weight: 300">Welcome to E-Article Library</h1>
       <br />
       <br />
@@ -21,6 +31,20 @@
       <a th:href="@{/article/all}" class="btn btn-primary btn-sm mb-3"
         >Browse All Articles</a
       >
+      <!-- <span>Want to logout ?</span> -->
+      <div>
+        <form
+          th:action="@{/logout}"
+          method="post"
+          style="margin: 50px 0px 0px 0px"
+        >
+          <input
+            type="submit"
+            value="Logout"
+            class="btn btn-secondary btn-sm mb-3"
+          />
+        </form>
+      </div>
     </div>
   </body>
 </html>

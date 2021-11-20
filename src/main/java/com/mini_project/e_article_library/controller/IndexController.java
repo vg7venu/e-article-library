@@ -43,4 +43,9 @@ public class IndexController {
         return "update-article";
     }
 
+    @GetMapping("/403")
+    public String accessDenied() {
+        return "access-denied";
+    }
+
 }

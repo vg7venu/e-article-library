@@ -24,7 +24,7 @@ public class UserController {
     public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
         User user;
         try {
-            user = userRepository.findByEmail(email);
+            user = userRepository.findByUserName(email);
         } catch (Exception e) {
             throw new UserNotFoundException("User not found with given email:" + email);
         }

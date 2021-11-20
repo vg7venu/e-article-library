@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -47,11 +50,13 @@
         <a
           th:href="@{/updateArticleForm/{id}(id=${article.id})}"
           class="btn btn-primary"
+          sec:authorize="hasAnyAuthority('ADMIN','AUTHOR')"
           >Update Article</a
         >
         <a
           th:href="@{/deleteArticle/{id}(id=${article.id})}"
           class="btn btn-danger"
+          sec:authorize="hasAnyAuthority('ADMIN')"
           >Delete Article</a
         >
       </div>

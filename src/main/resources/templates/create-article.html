@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -88,7 +91,13 @@
           rows="10"
         ></textarea>
 
-        <button type="submit" class="btn btn-info col-2">Create Article</button>
+        <button
+          type="submit"
+          class="btn btn-info col-2"
+          sec:authorize="hasAnyAuthority('ADMIN', 'AUTHOR')"
+        >
+          Create Article
+        </button>
       </form>
     </div>
   </body>

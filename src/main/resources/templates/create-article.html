@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <h1 align="center">Create Article</h1>
+    <div align="center" class="container my-2">
+      <form
+        action="#"
+        th:action="@{/create}"
+        th:object="${article}"
+        method="POST"
+      >
+        <input
+          type="text"
+          th:field="*{name}"
+          placeholder="Author Name"
+          class="form-control mb-4 col-4"
+        />
+
+        <input
+          type="text"
+          th:field="*{title}"
+          placeholder="Article Title"
+          class="form-control mb-4 col-4"
+        />
+
+        <input
+          type="text"
+          th:field="*{email}"
+          placeholder="Author's Email"
+          class="form-control mb-4 col-4"
+        />
+
+        <!-- <input
+          type="text"
+          th:field="*{category}"
+          placeholder="Article Category"
+          class="form-control mb-4 col-4"
+        /> -->
+
+        <input
+          type="text"
+          list="categories"
+          th:field="*{category}"
+          class="form-control mb-4 col-4"
+          name="Category"
+        />
+        <datalist id="categories">
+          <option value="Fiction"></option>
+          <option value="Non_Fiction"></option>
+          <option value="Political"></option>
+          <option value="Tech"></option>
+          <option value="Science"></option>
+          <option value="Wildlife"></option>
+        </datalist>
+
+        <input
+          type="text"
+          th:field="*{content}"
+          placeholder="Summary"
+          class="form-control mb-4 col-4"
+        />
+
+        <!-- <input
+          type="text"
+          th:field="*{description}"
+          placeholder="Description of the article"
+          class="form-control mb-4 col-4"
+        /> -->
+        <textarea
+          th:field="*{description}"
+          placeholder="Description of the article"
+          class="form-control mb-4 col-4"
+          name="paragraph_text"
+          cols="50"
+          rows="10"
+        ></textarea>
+
+        <button type="submit" class="btn btn-info col-2">Create Article</button>
+      </form>
+    </div>
+  </body>
+</html>

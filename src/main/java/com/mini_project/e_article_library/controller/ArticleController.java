@@ -18,19 +18,21 @@ import com.mini_project.e_article_library.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 
-@RestController
-@RequestMapping("/v1/")
+// @RestController
+@Controller
+// @RequestMapping("/v1/")
 public class ArticleController {
 
     @Autowired
@@ -41,7 +43,8 @@ public class ArticleController {
 
     @Operation(summary = "Create Article", tags = "Create and Modify Articles")
     @PostMapping("/create")
-    public ArticleDto createArticle(@RequestBody Article article) {
+    // public ArticleDto createArticle(@RequestBody Article article) {
+    public String createArticle(@ModelAttribute("article") Article article) {
         ArticleDto articleDto = new ArticleDto();
         articleDto.setName(article.getName());
         articleDto.setTitle(article.getTitle());
@@ -53,26 +56,28 @@ public class ArticleController {
         }
         articleDto.setContent(article.getContent());
         articleDto.setDescription(article.getDescription());
-        return articleRepository.save(articleDto);
+        articleRepository.save(articleDto);
+        return "redirect:/article/all";
     }
 
     @Operation(summary = "Get Articles using article Id", tags = "Retrieve Articles")
-    @GetMapping("/articles/{id}")
-    public ResponseEntity<ArticleDto> getArticle(@PathVariable int id) {
-        Optional<ArticleDto> article;
-        ArticleDto articleDto;
+    @GetMapping("/article/{id}")
+    // public ResponseEntity<ArticleDto> getArticle(@PathVariable int id) {
+    public String getArticle(Model model, @PathVariable int id) {
+        ArticleDto article;
         try {
-            article = articleRepository.findById(id);
-            articleDto = article.get();
+            article = articleRepository.findById(id).get();
         } catch (Exception e) {
             throw new ArticleNotFoundException("Article not found/" + e);
         }
+        model.addAttribute("article", article);
 
-        return ResponseEntity.ok(articleDto);
+        // return ResponseEntity.ok(articleDto);
+        return "article";
     }
 
     @Operation(summary = "Modify Article using Id", tags = "Create and Modify Articles")
-    @PutMapping("/articles/{id}")
+    @PutMapping("/article/modify/{id}")
     public ArticleDto updateArticle(@PathVariable int id, @RequestBody Article articleDetails) {
         Optional<ArticleDto> article;
         ArticleDto articleDto;
@@ -102,7 +107,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "Delete Article by Id", tags = "Create and Modify Articles")
-    @DeleteMapping("/article/{id}")
+    @DeleteMapping("/article/delete/{id}")
     public ResponseEntity<String> deleteArticleById(@PathVariable int id) {
         Optional<ArticleDto> article;
         ArticleDto articleDto;
@@ -155,19 +160,23 @@ public class ArticleController {
     }
 
     @Operation(summary = "Get All Articles in all Categories", tags = "Retrieve Articles")
-    @GetMapping("/articles/all")
-    public ResponseEntity<Map> getArticlesInAllCategories() {
-        Map<Category, Optional<List<ArticleDto>>> map = new HashMap();
+    @GetMapping("/article/all")
+    // public ResponseEntity<Map> getArticlesInAllCategories() {
+    public String getArticlesInAllCategories(Model model) {
+        Map<Category, List<ArticleDto>> map = new HashMap();
         for (Category category : Category.values()) {
-            Optional<List<ArticleDto>> articles;
+            List<ArticleDto> articles;
             try {
-                articles = articleRepository.findByCategory(category);
+                articles = articleRepository.findByCategory(category).get();
             } catch (Exception e) {
                 throw new ArticleNotFoundException("Article not found/" + e);
             }
             map.put(category, articles);
         }
-        return new ResponseEntity<Map>(map, HttpStatus.OK);
+        model.addAttribute("allArticles", map);
+        return "article-list";
+        // return new ResponseEntity<Map>(map, HttpStatus.OK);
+
     }
 
     @Operation(summary = "Get All Articles of that Email in all Categories", tags = "Retrieve Articles")
@@ -202,7 +211,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "Get Articles using Title", tags = "Retrieve Articles")
-    @GetMapping("/article/{title}")
+    @GetMapping("/article/title/{title}")
     public ResponseEntity<Optional<List<ArticleDto>>> getArticlesByTitle(@PathVariable String title) {
         Optional<List<ArticleDto>> article;
         try {

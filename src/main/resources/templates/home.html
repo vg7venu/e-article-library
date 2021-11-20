@@ -2,44 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Category Page</title>
-<link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+<title>Home Page</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 </head>
 <body>
- <h2 style="color: #1338BE">Choose Categories</h2>
-	<div class="product-preview-container">
-		<ul>
-			<li><a style="text-decoration: none" href="article.html"
-				th:href="@{http://localhost:8080/fiction}">Fiction</a></li>
-		</ul>
-	</div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<a class="navbar-brand"
+				style="color: #1338BE; font-size: 24px; font-weight: bold" href="#"
+				th:href="@{/fiction}">WELCOME TO E-ARTICLE-LIBRARY</a>
+			<div style="padding-left: 16px"></div>
+		</div>
+	</nav>
 
-	<div class="product-preview-container">
-		<ul>
-			<li><a style="text-decoration: none" href="fiction.html"
-				th:href="@{http://localhost:8080/non-fiction}">Non-Fiction</a></li>
-		</ul>
-	</div>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
 
-	<div class="product-preview-container">
-		<ul>
-			<li><a style="text-decoration: none" href="fiction.html"
-				th:href="@{http://localhost:8080/science}">Science</a></li>
-		</ul>
-	</div>
+				<h1 style="font-size: 22px; text: bold; color: purple">Please
+					select the Category</h1>
 
-	<div class="product-preview-container">
-		<ul>
-			<li><a style="text-decoration: none"  href="fiction.html"
-				th:href="@{http://localhost:8080/tech}">Tech</a></li>
-		</ul>
-	</div>
+				<div class="form-group">
+					<a href="fiction.html" th:href="@{http://localhost:8080/fiction}">Fiction</a>
+				</div>
 
-	<div class="product-preview-container">
-		<ul>
-			<li><a style="text-decoration: none"  href="fiction.html"
-				th:href="@{http://localhost:8080/political}">Political</a></li>
-		</ul>
+				<div class="form-group">
+					<a href="non_fiction.html"
+						th:href="@{http://localhost:8080/non_fiction}">Non-Fiction</a>
+				</div>
+
+				<div class="form-group">
+					<a href="science.html" th:href="@{http://localhost:8080/science}">Science</a>
+				</div>
+
+				<div class="form-group">
+					<a href="tech.html" th:href="@{http://localhost:8080/tech}">Tech</a>
+				</div>
+
+				<div class="form-group">
+					<a href="political.html"
+						th:href="@{http://localhost:8080/political}">Political</a>
+				</div>
+
+
+			</div>
+		</div>
 	</div>
 
 </body>

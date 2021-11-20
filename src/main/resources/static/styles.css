@@ -17,16 +17,14 @@ body {
 
 .product-preview-container {
     border: 1px solid #ccc;
-    border-radius: 25px;
     padding: 5px;
-    width: 200px;
+    width: 250px;
     height:180px;
     margin: 10px ;
     display: inline-block;
     text-align:left;
-    background:#79BAEC;
 }
-
+ 
 .product-preview-container input {
     width: 50px;
 }
@@ -44,9 +42,6 @@ body {
  
 ul {
     list-style-type: none;
-    padding-left: 50px;
-    padding-top: 35px;
+    padding-left: 5px;
     margin:5px;
-    font-size:18px;
-    font-weight:bold;
 }

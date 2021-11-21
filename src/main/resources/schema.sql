@@ -1,4 +1,4 @@
-Use articlestore;
+-- Use articlestore;
 
 CREATE TABLE `users` (
   `user_id` int NOT NULL AUTO_INCREMENT,

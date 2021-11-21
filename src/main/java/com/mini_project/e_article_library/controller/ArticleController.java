@@ -65,6 +65,7 @@ public class ArticleController {
     public String getArticlesByEmailInAllCategories(Model model, @PathVariable String email) {
         Map<Category, List<Article>> map = articleService.getArticlesByEmailInAllCategories(email);
         model.addAttribute("allArticles", map);
+        model.addAttribute("email", email);
         return "articles-author";
     }
 

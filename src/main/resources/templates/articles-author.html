@@ -36,7 +36,7 @@
                             <th>PublicationDate</th>
                         </tr>
                         <tr th:each="article : ${entry.value}" align="center">
-                            <td width="70%"><a th:href="@{{articleId}(articleId=${article.id})}" th:utext="${article.title}">...                         </td>
+                            <td width="70%"><a th:href="@{../{articleId}(articleId=${article.id})}" th:utext="${article.title}">...                         </td>
                             <td th:utext="${#dates.format(article.publicationDate, 'dd-MMM-yyyy')}">...</td>
                         </tr>
                     </table>

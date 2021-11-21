@@ -38,6 +38,12 @@ public class ArticleService {
             List<Article> articles;
             try {
                 articles = articleRepository.findByCategory(category).get();
+                Collections.sort(articles, new Comparator<Article>() {
+                    public int compare(Article a1, Article a2) {
+                        return a1.getPublicationDate().compareTo(a2.getPublicationDate());
+                    }
+                });
+                Collections.reverse(articles);
             } catch (Exception e) {
                 throw new ArticleNotFoundException("Article not found/" + e);
             }
@@ -63,6 +69,12 @@ public class ArticleService {
             List<Article> articles;
             try {
                 articles = articleRepository.findByCategoryAndEmail(category, email).get();
+                Collections.sort(articles, new Comparator<Article>() {
+                    public int compare(Article a1, Article a2) {
+                        return a1.getPublicationDate().compareTo(a2.getPublicationDate());
+                    }
+                });
+                Collections.reverse(articles);
             } catch (Exception e) {
                 throw new ArticleNotFoundException("Article not found/" + e);
             }

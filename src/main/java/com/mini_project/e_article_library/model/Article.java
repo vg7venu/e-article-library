@@ -27,6 +27,7 @@ public class Article {
     private String title;
     private Category category;
     @CreatedDate
+    @Column(name = "publication_date", updatable = false)
     private Date publicationDate;
     private String content;
     @Lob

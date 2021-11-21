@@ -1,10 +1,10 @@
-CREATE TABLE users ( user_id int NOT NULL,
-					email varchar(45) NOT NULL, 
-					full_name varchar(45) NOT NULL, 
-					password varchar(64) NOT NULL, 
-					enabled smallint DEFAULT NULL, 
-					PRIMARY KEY (user_id),
-					UNIQUE (email));
+-- CREATE TABLE users ( user_id int NOT NULL,
+-- 					email varchar(45) NOT NULL, 
+-- 					full_name varchar(45) NOT NULL, 
+-- 					password varchar(64) NOT NULL, 
+-- 					enabled smallint DEFAULT NULL, 
+-- 					PRIMARY KEY (user_id),
+-- 					UNIQUE (email));
  
 CREATE TABLE roles (
   role_id int NOT NULL,

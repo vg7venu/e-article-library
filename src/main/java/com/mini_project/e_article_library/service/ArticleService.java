@@ -57,4 +57,17 @@ public class ArticleService {
         return "redirect:/article/all";
     }
 
+    public Map<Category, List<Article>> getArticlesByEmailInAllCategories(String email) {
+        Map<Category, List<Article>> map = new HashMap();
+        for (Category category : Category.values()) {
+            List<Article> articles;
+            try {
+                articles = articleRepository.findByCategoryAndEmail(category, email).get();
+            } catch (Exception e) {
+                throw new ArticleNotFoundException("Article not found/" + e);
+            }
+            map.put(category, articles);
+        }
+        return map;
+    }
 }

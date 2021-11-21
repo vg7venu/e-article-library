@@ -1,106 +1,71 @@
 package com.mini_project.e_article_library.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import com.mini_project.e_article_library.exception.ArticleNotFoundException;
 import com.mini_project.e_article_library.model.Article;
 import com.mini_project.e_article_library.model.Category;
-import com.mini_project.e_article_library.repository.ArticleRepository;
 import com.mini_project.e_article_library.service.ArticleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import io.swagger.v3.oas.annotations.Operation;
-
-@RestController
+@Controller
 public class ArticleController {
 
     @Autowired
-    private ArticleRepository articleRepository;
+    ArticleService articleService;
 
-    @Operation(summary = "Get All Articles in that Category", tags = "Retrieve Articles")
-    @GetMapping("/category/{category}/articles")
-    public ResponseEntity<Optional<List<Article>>> getArticlesByCategory(@PathVariable String category) {
-        Optional<List<Article>> article;
-        try {
-            Category cat = Category.valueOf(category);
-            article = articleRepository.findByCategory(cat);
-        } catch (Exception e) {
-            throw new ArticleNotFoundException("Article not found/" + e);
-        }
-        if (article.get().size() == 0) {
-            throw new ArticleNotFoundException("Article not found");
-        }
-        return new ResponseEntity<Optional<List<Article>>>(article, HttpStatus.OK);
+    @PostMapping("/create")
+    public String createArticle(@ModelAttribute("article") Article article) {
+        article = articleService.createArticle(article);
+        return "redirect:/article/" + article.getId();
     }
 
-    @Operation(summary = "Get All Articles of that Email in all Categories", tags = "Retrieve Articles")
-    @GetMapping("/articles/{email}/all")
-    public ResponseEntity<Map> getArticlesByEmailInAllCategories(@PathVariable String email) {
-        Map<Category, Optional<List<Article>>> map = new HashMap();
-        for (Category category : Category.values()) {
-            Optional<List<Article>> articles;
-            try {
-                articles = articleRepository.findByCategoryAndEmail(category, email);
-            } catch (Exception e) {
-                throw new ArticleNotFoundException("Article not found/" + e);
-            }
-            map.put(category, articles);
-        }
-        return new ResponseEntity<Map>(map, HttpStatus.OK);
+    @GetMapping("/article/{id}")
+    public String getArticle(Model model, @PathVariable int id) {
+        Article article = articleService.getArticle(id);
+        model.addAttribute("article", article);
+        return "article";
     }
 
-    @Operation(summary = "Get Articles by the Name", tags = "Retrieve Articles")
-    @GetMapping("/author/{name}/articles")
-    public ResponseEntity<Optional<List<Article>>> getArticlesByName(@PathVariable String name) {
-        Optional<List<Article>> article;
-        try {
-            article = articleRepository.findByName(name);
-        } catch (Exception e) {
-            throw new ArticleNotFoundException("Article not found/" + e);
-        }
-        if (article.get().size() == 0) {
-            throw new ArticleNotFoundException("Article not found");
-        }
-        return new ResponseEntity<Optional<List<Article>>>(article, HttpStatus.OK);
+    @GetMapping("/article/all")
+    public String getArticlesInAllCategories(Model model) {
+        Map<Category, List<Article>> map = articleService.getAllArticles();
+        model.addAttribute("allArticles", map);
+        return "article-list";
     }
 
-    @Operation(summary = "Get Articles using Title", tags = "Retrieve Articles")
-    @GetMapping("/article/title/{title}")
-    public ResponseEntity<Optional<List<Article>>> getArticlesByTitle(@PathVariable String title) {
-        Optional<List<Article>> article;
-        try {
-            article = articleRepository.findByTitle(title);
-        } catch (Exception e) {
-            throw new ArticleNotFoundException("Article not found/" + e);
-        }
-        if (article.get().size() == 0) {
-            throw new ArticleNotFoundException("Article not found");
-        }
-        return new ResponseEntity<Optional<List<Article>>>(article, HttpStatus.OK);
+    @GetMapping("/createArticleForm")
+    public String createArticle(Model model) {
+        Article article = new Article();
+        model.addAttribute("article", article);
+        return "create-article";
     }
 
-    @Operation(summary = "Get Articles using Author email", tags = "Retrieve Articles")
+    @GetMapping("/updateArticleForm/{id}")
+    public String updateArticle(@PathVariable(value = "id") int id, Model model) {
+        Article article = articleService.getArticle(id);
+        model.addAttribute("article", article);
+        return "update-article";
+    }
+
+    @GetMapping("/deleteArticle/{id}")
+    public String deleteArticleById(@PathVariable int id) {
+        articleService.deleteArticleById(id);
+        return "redirect:/article/all";
+    }
+
     @GetMapping("/article/author/{email}")
-    public ResponseEntity<Optional<List<Article>>> getArticlesByAuthorEmail(@PathVariable String email) {
-        Optional<List<Article>> article;
-        try {
-            article = articleRepository.findByEmail(email);
-        } catch (Exception e) {
-            throw new ArticleNotFoundException("Article not found/" + e);
-        }
-        if (article.get().size() == 0) {
-            throw new ArticleNotFoundException("Article not found");
-        }
-        return new ResponseEntity<Optional<List<Article>>>(article, HttpStatus.OK);
+    public String getArticlesByEmailInAllCategories(Model model, @PathVariable String email) {
+        Map<Category, List<Article>> map = articleService.getArticlesByEmailInAllCategories(email);
+        model.addAttribute("allArticles", map);
+        return "articles-author";
     }
 
 }

@@ -22,29 +22,24 @@
         <br>
         <table border="1" class="table table-striped table-responsive-md container my-2" align="center">
             <tr th:each="entry, stat: ${allArticles}" align="center">
-                <td th:text="${entry.key}">Categroy</td>
-                <td>
-                    <table border="1" class="table table-striped table-responsive-md">
-                        <tr align="center">
-                            <th>Author Name</th>
-                            <th>Article Title</th>
-                            <th>Categroy</th>
-                            <th>PublicationDate</th>
-                            <!-- <th>Content</th>
-                            <th>Description</th> -->
-                        </tr>
-                        <tr th:each="article : ${entry.value}" align="center">
-                            <td th:utext="${article.name}">...</td>
-                            <td><a th:href="@{{articleId}(articleId=${article.id})}" th:utext="${article.title}">...
-                            </td>
-                            
-                            <td th:utext="${article.category}">...</td>
-                            <!-- <td th:utext="${article.publicationDate}">...</td> -->
-                            <td th:utext="${#dates.format(article.publicationDate, 'dd-MMM-yyyy')}">...</td>
-                            <!-- <td th:utext="${article.content}">...</td>
-                            <td th:utext="${article.description}">...</td> -->
-                        </tr>
-                    </table>
+                <td th:text="${entry.key}" width="10%" >Categroy</td>
+                <td width="90%">
+                    <div th:if="not ${entry.value.isEmpty()}">
+                        <table border="1" class="table table-striped table-responsive-md">
+                            <tr align="center">
+                                <th>Author Name</th>
+                                <th>Article Title</th>
+                                <th>PublicationDate</th>
+                            </tr>
+                            <tr th:each="article : ${entry.value}" align="center">
+                                <td width="25%"><a th:href="@{/article/author/{author}(author=${article.email})}" th:utext="${article.name}">...
+                                </td>
+                                <td width="50%"><a th:href="@{{articleId}(articleId=${article.id})}" th:utext="${article.title}">...
+                                </td>
+                                <td th:utext="${#dates.format(article.publicationDate, 'dd-MMM-yyyy')}" width="15%">...</td>
+                            </tr>
+                        </table>
+                    </div>
                 </td>
             </tr>
         </table>

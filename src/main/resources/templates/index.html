@@ -31,7 +31,12 @@
       <a th:href="@{/article/all}" class="btn btn-primary btn-sm mb-3"
         >Browse All Articles</a
       >
-      <!-- <span>Want to logout ?</span> -->
+      <a
+        th:href="@{/article/author/{author}(author=${#authentication.getName()})}"
+        class="btn btn-primary btn-sm mb-3"
+        sec:authorize="hasAnyAuthority('AUTHOR')"
+        >MyArticles</a
+      >
       <div>
         <form
           th:action="@{/logout}"

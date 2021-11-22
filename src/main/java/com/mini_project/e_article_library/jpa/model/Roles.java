@@ -1,6 +1,5 @@
 package com.mini_project.e_article_library.jpa.model;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
